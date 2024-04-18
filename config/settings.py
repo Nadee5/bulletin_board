@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'drf_yasg',
+
+    'users',
 ]
 
 MIDDLEWARE = [
@@ -137,3 +139,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORS_ALLOWED_ORIGINS = ['http://localhost:8000']
 CSRF_TRUSTED_ORIGINS = ['http://localhost:8000']
 CORS_ALLOW_ALL_ORIGINS = False
+
+AUTH_USER_MODEL = 'users.User'
