@@ -6,6 +6,7 @@ from rest_framework.response import Response
 
 from config.services import send_welcome_message
 from users.models import User
+from users.permissions import IsOwner, IsAdmin
 from users.serializers import UserSerializer
 
 
@@ -36,21 +37,24 @@ class UserCreateAPIView(generics.CreateAPIView):
 class UserRetrieveAPIView(generics.RetrieveAPIView):
     serializer_class = UserSerializer #прописать get_serializer_class
     queryset = User.objects.all()
-    # permission_classes = [IsOwner, IsAdmin]
+    permission_classes = [IsOwner | IsAdmin]
 
 
 class UserUpdateAPIView(generics.UpdateAPIView):
     serializer_class = UserSerializer
     queryset = User.objects.all()
+    permission_classes = [IsOwner]
 
 
 class UserDestroyAPIView(generics.DestroyAPIView):
     queryset = User.objects.all()
+    permission_classes = [IsOwner | IsAdmin]
 
 
 class UserListAPIView(generics.ListAPIView):
     serializer_class = UserSerializer
     queryset = User.objects.all()
+    permission_classes = [IsAdmin]
 
 
 # @login_required
