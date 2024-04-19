@@ -4,7 +4,7 @@ from rest_framework import generics, status
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
-from config.services import send_welcome_message, send_new_password
+from config.services import send_welcome_message
 from users.models import User
 from users.serializers import UserSerializer
 
