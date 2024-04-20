@@ -9,6 +9,7 @@ from users.permissions import IsOwner, IsAdmin
 class AdvertListAPIView(generics.ListAPIView):
     """Просмотра списка объявлений"""
     serializer_class = AdvertSerializer
+    queryset = Advert.objects.all()
     permission_classes = [AllowAny]
 
 
@@ -19,7 +20,7 @@ class UserAdvertListAPIView(generics.ListAPIView):
 
     def get_queryset(self):
         """Фильтрация списка объявлений по текущему пользователю"""
-        return Advert.objects.filter(user=self.request.user)
+        return Advert.objects.filter(author=self.request.user)
 
 
 class AdvertCreateAPIView(generics.CreateAPIView):
@@ -29,7 +30,7 @@ class AdvertCreateAPIView(generics.CreateAPIView):
     def perform_create(self, serializer):
         """Привязка текущего пользователя к создаваемому объекту"""
         new_advert = serializer.save()
-        new_advert.user = self.request.user
+        new_advert.author = self.request.user
         new_advert.save()
 
 
@@ -58,7 +59,13 @@ class ReviewListAPIView(generics.ListAPIView):
 
     def get_queryset(self):
         """Фильтрация списка отзывов по объявлениям текущего пользователя"""
-        return Review.objects.filter(advert=self.request.user.advert)
+        return Review.objects.filter(author=self.request.user)  # оставленные мной
+
+        # попытка 100500
+        # author_advert = Advert.objects.filter(author=self.request.user)
+        # return Review.objects.filter(advert=author_advert)
+
+        # return Review.objects.filter(author_advert=self.request.user)
 
 
 class ReviewCreateAPIView(generics.CreateAPIView):
@@ -68,7 +75,7 @@ class ReviewCreateAPIView(generics.CreateAPIView):
     def perform_create(self, serializer):
         """Привязка текущего пользователя к создаваемому объекту"""
         new_review = serializer.save()
-        new_review.user = self.request.user
+        new_review.author = self.request.user
         new_review.save()
 
 
