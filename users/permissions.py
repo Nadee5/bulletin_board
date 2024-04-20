@@ -10,6 +10,9 @@ class IsOwner(BasePermission):
     def has_object_permission(self, request, view, obj):
         return request.user == obj.user
 
+    # def has_permission(self, request, view): # для просмотра только своего профиля
+    #     return request.user ==
+
 
 class IsAdmin(BasePermission):
     """Проверка прав доступа группы Администраторов"""
