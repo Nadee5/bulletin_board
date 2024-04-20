@@ -1,3 +1,5 @@
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.filters import OrderingFilter, SearchFilter
 from rest_framework import generics
 from rest_framework.permissions import AllowAny, IsAdminUser
 
@@ -11,6 +13,10 @@ class AdvertListAPIView(generics.ListAPIView):
     serializer_class = AdvertSerializer
     queryset = Advert.objects.all()
     permission_classes = [AllowAny]
+    filter_backends = [DjangoFilterBackend, OrderingFilter, SearchFilter]
+    filterset_fields = ('author',)
+    ordering_fields = ('title', '-created_at', 'price')
+    search_fields = ('title',)
 
 
 class UserAdvertListAPIView(generics.ListAPIView):
