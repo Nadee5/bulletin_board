@@ -4,6 +4,7 @@ from rest_framework import generics
 from rest_framework.permissions import AllowAny, IsAdminUser
 
 from board.models import Advert, Review
+from board.paginators import AdvertPaginator
 from board.serializers import AdvertSerializer, ReviewSerializer
 from users.permissions import IsOwner, IsAdmin
 
@@ -13,6 +14,9 @@ class AdvertListAPIView(generics.ListAPIView):
     serializer_class = AdvertSerializer
     queryset = Advert.objects.all()
     permission_classes = [AllowAny]
+
+    pagination_class = AdvertPaginator
+
     filter_backends = [DjangoFilterBackend, OrderingFilter, SearchFilter]
     filterset_fields = ('author',)
     ordering_fields = ('title', '-created_at', 'price')
