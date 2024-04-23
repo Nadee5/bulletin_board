@@ -8,7 +8,7 @@ class IsOwner(BasePermission):
     message = "Доступно только владельцу"
 
     def has_object_permission(self, request, view, obj):
-        return request.user == obj.user
+        return request.user.email == obj.email
 
     # def has_permission(self, request, view): # для просмотра только своего профиля
     #     return request.user ==
