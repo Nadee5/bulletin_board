@@ -1,7 +1,5 @@
 from django.core.exceptions import ObjectDoesNotExist
-from django.shortcuts import redirect
-from django.urls import reverse
-from rest_framework import generics, status, viewsets
+from rest_framework import generics, status
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView

@@ -9,7 +9,7 @@ def send_message_new_review(user, new_review):
             'welcome': 'Привет',
             'introductory': 'Рады видеть Вас',
             'one_line': f'На Ваше объявление оставлен отзыв: "{new_review}".',
-            'two_line': f'Перейдите на сайт, чтобы увидеть детали.',
+            'two_line': 'Перейдите на сайт, чтобы увидеть детали.',
             'first_name': user.first_name,
             'last_name': user.last_name,
             'note': 'Если вы не регистрировались на сайте, то проигнорируйте это письмо.'
