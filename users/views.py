@@ -10,7 +10,7 @@ from config.services import generate_new_password
 from users.mail_funcs import send_welcome_message, send_new_password
 from users.models import User
 from users.permissions import IsOwner, IsAdmin
-from users.serializers import UserSerializer, UserConsumerSerializer, UserResetPasswordSerializer
+from users.serializers import UserSerializer, UserConsumerSerializer
 
 
 class UserCreateAPIView(generics.CreateAPIView):
@@ -60,37 +60,6 @@ class UserListAPIView(generics.ListAPIView):
     # permission_classes = [IsAdmin] # for test
 
 
-# class UserResetPasswordAPI(generics.UpdateAPIView):
-#     """Восстановление доступа к аккаунту"""
-#     queryset = User.objects.all()
-#     permission_classes = [AllowAny]
-#
-#     # def update(self, request, *args, **kwargs):
-#     #     """Запрашивает почту, если пользователь существует, отправляет на почту письмо со сгенерированным паролем."""
-#     #     user = self.get_object()
-#     #     new_password = request.data.get('password')
-#     #     if not new_password:
-#     #         return Response({'error': 'Необходимо ввести новый пароль.'}, status=status.HTTP_400_BAD_REQUEST)
-#     #
-#     #     user.set_password(new_password)
-#     #     send_new_password(user, new_password)
-#     #     user.save()
-#     #     return Response({'success': 'Пароль изменён и отправлен на почту.'}, status=status.HTTP_200_OK)
-#
-#     def update(self, request, *args, **kwargs):
-#         """Запрашивает почту, если пользователь существует, отправляет на почту письмо со сгенерированным паролем."""
-#         user = self.get_object()
-#         email = request.data.get('email')
-#         if not email:
-#             return Response({'error': 'Почта'}, status=status.HTTP_400_BAD_REQUEST)
-#
-#         new_password = generate_new_password()
-#         user.set_password(new_password)
-#         send_new_password(user, new_password)
-#         user.save()
-#         return Response({'success': 'Пароль изменён и отправлен на почту.'}, status=status.HTTP_200_OK)
-
-
 class UserResetPasswordAPIView(APIView):
     """Восстановление доступа к аккаунту"""
     permission_classes = [AllowAny]
@@ -112,4 +81,3 @@ class UserResetPasswordAPIView(APIView):
         send_new_password(user, new_password)
         user.save()
         return Response({'success': 'Пароль изменён и отправлен на почту.'}, status=status.HTTP_200_OK)
-
