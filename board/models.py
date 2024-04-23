@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.db import models
 
-from config.services import NULLABLE
+from config.сonstants import NULLABLE
 
 
 class Advert(models.Model):
