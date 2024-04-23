@@ -4,14 +4,15 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from config.services import generate_new_password
+from users.services import generate_new_password
 from users.mail_funcs import send_welcome_message, send_new_password
 from users.models import User
 from users.permissions import IsOwner, IsAdmin
-from users.serializers import UserSerializer, UserConsumerSerializer
+from users.serializers import UserSerializer, UserAdminSerializer
 
 
 class UserCreateAPIView(generics.CreateAPIView):
+    """Регистрация Пользователя."""
     serializer_class = UserSerializer
     permission_classes = [AllowAny]
 
@@ -35,31 +36,8 @@ class UserCreateAPIView(generics.CreateAPIView):
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
 
-class UserRetrieveAPIView(generics.RetrieveAPIView):
-    serializer_class = UserSerializer  # прописать get_serializer_class
-    queryset = User.objects.all()
-    permission_classes = [IsOwner | IsAdmin]
-
-
-class UserUpdateAPIView(generics.UpdateAPIView):
-    serializer_class = UserSerializer
-    queryset = User.objects.all()
-    permission_classes = [IsOwner | IsAdmin]
-
-
-class UserDestroyAPIView(generics.DestroyAPIView):
-    queryset = User.objects.all()
-    permission_classes = [IsOwner | IsAdmin]
-
-
-class UserListAPIView(generics.ListAPIView):
-    serializer_class = UserSerializer
-    queryset = User.objects.all()
-    # permission_classes = [IsAdmin] # for test
-
-
 class UserResetPasswordAPIView(APIView):
-    """Восстановление доступа к аккаунту"""
+    """Восстановление доступа к аккаунту."""
     permission_classes = [AllowAny]
 
     def post(self, request):
@@ -79,3 +57,24 @@ class UserResetPasswordAPIView(APIView):
         send_new_password(user, new_password)
         user.save()
         return Response({'success': 'Пароль изменён и отправлен на почту.'}, status=status.HTTP_200_OK)
+
+
+class UserRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
+    """Точка входа для Пользователя: просмотр, редактирование, удаление СВОЕГО аккаунта."""
+    serializer_class = UserSerializer
+    queryset = User.objects.all()
+    permission_classes = [IsOwner]
+
+
+class UserAdminRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
+    """Точка входа для Администратора: просмотр, редактирование, удаление аккаунта."""
+    serializer_class = UserAdminSerializer
+    queryset = User.objects.all()
+    permission_classes = [IsAdmin]
+
+
+class UserAdminListAPIView(generics.ListAPIView):
+    """Точка входа для Администратора: просмотр списка аккаунтов."""
+    serializer_class = UserAdminSerializer
+    queryset = User.objects.all()
+    permission_classes = [IsAdmin] # for test
