@@ -3,7 +3,7 @@ from rest_framework import serializers
 from users.models import User
 
 
-class UserSerializer(serializers.ModelSerializer):
+class UserAdminSerializer(serializers.ModelSerializer):
     """Базовый сериализатор для модели пользователя"""
 
     class Meta:
@@ -11,7 +11,7 @@ class UserSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class UserConsumerSerializer(serializers.ModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
     """Пользовательский сериализатор для модели пользователя"""
 
     class Meta:

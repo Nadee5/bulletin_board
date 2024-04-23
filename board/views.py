@@ -11,7 +11,7 @@ from users.permissions import IsOwner, IsAdmin
 
 
 class AdvertListAPIView(generics.ListAPIView):
-    """Просмотра списка объявлений"""
+    """Просмотр списка объявлений."""
     serializer_class = AdvertSerializer
     queryset = Advert.objects.all()
     permission_classes = [AllowAny]
@@ -25,69 +25,70 @@ class AdvertListAPIView(generics.ListAPIView):
 
 
 class UserAdvertListAPIView(generics.ListAPIView):
-    """Просмотра списка объявлений текущего пользователя"""
+    """Просмотр списка объявлений текущего пользователя."""
     serializer_class = AdvertSerializer
     permission_classes = [IsOwner]
 
     def get_queryset(self):
-        """Фильтрация списка объявлений по текущему пользователю"""
+        """Возвращает список объявлений, автором которых является текущий пользователь."""
         return Advert.objects.filter(author=self.request.user.id)
 
 
 class AdvertCreateAPIView(generics.CreateAPIView):
-    """Cоздание объявления"""
+    """Cоздание объявления."""
     serializer_class = AdvertSerializer
 
     def perform_create(self, serializer):
-        """Привязка текущего пользователя к создаваемому объекту"""
+        """Привязка текущего пользователя к создаваемому объекту."""
         new_advert = serializer.save()
         new_advert.author = self.request.user
         new_advert.save()
 
 
 class AdvertRetrieveAPIView(generics.RetrieveAPIView):
-    """Просмотр объявления"""
+    """Просмотр объявления."""
     serializer_class = AdvertSerializer
     queryset = Advert.objects.all()
 
 
 class AdvertUpdateAPIView(generics.UpdateAPIView):
-    """Редактирование объявления"""
+    """Редактирование объявления."""
     serializer_class = AdvertSerializer
     queryset = Advert.objects.all()
     permission_classes = [IsOwner | IsAdmin]
 
 
 class AdvertDestroyAPIView(generics.DestroyAPIView):
-    """Удаление объявления"""
+    """Удаление объявления."""
     queryset = Advert.objects.all()
     permission_classes = [IsOwner | IsAdmin]
 
 
 class ReviewListAPIView(generics.ListAPIView):
-    """Список отзывов, оставленных текущем пользователем"""
+    """Список отзывов, оставленных текущем пользователем."""
     serializer_class = ReviewSerializer
 
     def get_queryset(self):
-        """Фильтрация списка объявлений"""
+        """Фильтрация списка объявлений."""
         return Review.objects.filter(author=self.request.user)
 
 
 class UserReviewListAPIView(generics.ListAPIView):
-    """Список отзывов, оставленных на объявления текущего пользователя"""
+    """Список отзывов, оставленных на объявления текущего пользователя."""
     serializer_class = ReviewSerializer
 
     def get_queryset(self):
-        """Фильтрация списка объявлений"""
+        """Фильтрация списка объявлений."""
         return Review.objects.filter(advert__author=self.request.user.id)
 
 
 class ReviewCreateAPIView(generics.CreateAPIView):
-    """Cоздание отзыва"""
+    """Cоздание отзыва."""
     serializer_class = ReviewSerializer
 
     def perform_create(self, serializer):
-        """Привязка текущего пользователя к создаваемому объекту"""
+        """Привязка текущего пользователя к создаваемому объекту.
+        Отправка уведомления владельцу объявления о новой записи."""
         new_review = serializer.save()
         new_review.author = self.request.user
         new_review.save()
@@ -97,13 +98,13 @@ class ReviewCreateAPIView(generics.CreateAPIView):
 
 
 class ReviewUpdateAPIView(generics.UpdateAPIView):
-    """Редактирование отзыва"""
+    """Редактирование отзыва."""
     serializer_class = ReviewSerializer
     queryset = Review.objects.all()
     permission_classes = [IsOwner | IsAdmin]
 
 
 class ReviewDestroyAPIView(generics.DestroyAPIView):
-    """Удаление отзыва"""
+    """Удаление отзыва."""
     queryset = Review.objects.all()
     permission_classes = [IsOwner | IsAdmin]
