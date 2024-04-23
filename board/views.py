@@ -3,6 +3,7 @@ from rest_framework.filters import OrderingFilter, SearchFilter
 from rest_framework import generics
 from rest_framework.permissions import AllowAny, IsAdminUser
 
+from board.mail_funcs import send_message_new_review
 from board.models import Advert, Review
 from board.paginators import AdvertPaginator
 from board.serializers import AdvertSerializer, ReviewSerializer
@@ -30,7 +31,7 @@ class UserAdvertListAPIView(generics.ListAPIView):
 
     def get_queryset(self):
         """Фильтрация списка объявлений по текущему пользователю"""
-        return Advert.objects.filter(author=self.request.user)
+        return Advert.objects.filter(author=self.request.user.id)
 
 
 class AdvertCreateAPIView(generics.CreateAPIView):
@@ -64,18 +65,21 @@ class AdvertDestroyAPIView(generics.DestroyAPIView):
 
 
 class ReviewListAPIView(generics.ListAPIView):
-    """Просмотр списка отзывов"""
+    """Список отзывов, оставленных текущем пользователем"""
     serializer_class = ReviewSerializer
 
     def get_queryset(self):
-        """Фильтрация списка отзывов по объявлениям текущего пользователя"""
-        return Review.objects.filter(author=self.request.user)  # оставленные мной
+        """Фильтрация списка объявлений"""
+        return Review.objects.filter(author=self.request.user)
 
-        # попытка 100500
-        # author_advert = Advert.objects.filter(author=self.request.user)
-        # return Review.objects.filter(advert=author_advert)
 
-        # return Review.objects.filter(author_advert=self.request.user)
+class UserReviewListAPIView(generics.ListAPIView):
+    """Список отзывов, оставленных на объявления текущего пользователя"""
+    serializer_class = ReviewSerializer
+
+    def get_queryset(self):
+        """Фильтрация списка объявлений"""
+        return Review.objects.filter(advert__author=self.request.user.id)
 
 
 class ReviewCreateAPIView(generics.CreateAPIView):
@@ -87,6 +91,9 @@ class ReviewCreateAPIView(generics.CreateAPIView):
         new_review = serializer.save()
         new_review.author = self.request.user
         new_review.save()
+
+        user = new_review.advert.author
+        send_message_new_review(user, new_review)
 
 
 class ReviewUpdateAPIView(generics.UpdateAPIView):
