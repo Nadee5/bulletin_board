@@ -7,7 +7,7 @@ from rest_framework.views import APIView
 from users.services import generate_new_password
 from users.mail_funcs import send_welcome_message, send_new_password
 from users.models import User
-from users.permissions import IsOwner, IsAdmin
+from users.permissions import IsAdmin, IsSelf
 from users.serializers import UserSerializer, UserAdminSerializer
 
 
@@ -64,7 +64,7 @@ class UserRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     """Точка входа для Пользователя: просмотр, редактирование, удаление СВОЕГО аккаунта."""
     serializer_class = UserSerializer
     queryset = User.objects.all()
-    permission_classes = [IsOwner]
+    permission_classes = [IsSelf]
 
 
 class UserAdminRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
