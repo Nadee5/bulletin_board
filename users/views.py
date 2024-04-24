@@ -78,4 +78,4 @@ class UserAdminListAPIView(generics.ListAPIView):
     """Точка входа для Администратора: просмотр списка аккаунтов."""
     serializer_class = UserAdminSerializer
     queryset = User.objects.all()
-    permission_classes = [IsAdmin] # for test
+    permission_classes = [IsAdmin]
