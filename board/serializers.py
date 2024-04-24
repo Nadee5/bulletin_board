@@ -13,7 +13,7 @@ class ReviewSerializer(serializers.ModelSerializer):
 
 class AdvertSerializer(serializers.ModelSerializer):
     """Базовый сериализатор для модели объявления"""
-    review = ReviewSerializer(source='advert', many=True)
+    review = ReviewSerializer(source='advert', many=True, read_only=True)
 
     class Meta:
         model = Advert
