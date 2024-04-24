@@ -29,10 +29,11 @@ class UserCreateAPIView(generics.CreateAPIView):
         password = serializer.data["password"]
         user = User.objects.get(pk=serializer.data["id"])
         user.set_password(password)
+
         send_welcome_message(user, password)
+
         user.is_active = True
         user.save()
-        send_welcome_message(user, password)
 
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
