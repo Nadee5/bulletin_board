@@ -1,0 +1,76 @@
+[
+  {
+    "model": "board.advert",
+    "pk": 7,
+    "fields": {
+      "title": "Телефон",
+      "price": 25000,
+      "description": "2022 года, в хорошем состоянии",
+      "created_at": "2024-04-24T08:00:39.991Z",
+      "author": 6
+    }
+  },
+  {
+    "model": "board.advert",
+    "pk": 8,
+    "fields": {
+      "title": "Ноутбук",
+      "price": 40000,
+      "description": "2021 года, в отличном состоянии",
+      "created_at": "2024-04-24T08:04:11.293Z",
+      "author": 6
+    }
+  },
+  {
+    "model": "board.advert",
+    "pk": 9,
+    "fields": {
+      "title": "Телевизор",
+      "price": 65000,
+      "description": "2022 года, в отличном состоянии",
+      "created_at": "2024-04-24T08:06:09.550Z",
+      "author": 7
+    }
+  },
+  {
+    "model": "board.advert",
+    "pk": 10,
+    "fields": {
+      "title": "Планшет",
+      "price": 15000,
+      "description": "2021 года, в хорошем состоянии",
+      "created_at": "2024-04-24T08:07:51.970Z",
+      "author": 7
+    }
+  },
+  {
+    "model": "board.review",
+    "pk": 1,
+    "fields": {
+      "text": "Доставили быстро, качеством довольна",
+      "created_at": "2024-04-24T08:48:45.752Z",
+      "advert": 7,
+      "author": 7
+    }
+  },
+  {
+    "model": "board.review",
+    "pk": 2,
+    "fields": {
+      "text": "Был такой же, модель супер",
+      "created_at": "2024-04-24T08:49:38.914Z",
+      "advert": 8,
+      "author": 7
+    }
+  },
+  {
+    "model": "board.review",
+    "pk": 3,
+    "fields": {
+      "text": "Скорости, качество супер!",
+      "created_at": "2024-04-24T08:51:54.096Z",
+      "advert": 10,
+      "author": 6
+    }
+  }
+]
