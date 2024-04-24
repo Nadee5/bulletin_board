@@ -13,7 +13,7 @@ from users.serializers import UserSerializer, UserAdminSerializer
 
 class UserCreateAPIView(generics.CreateAPIView):
     """Регистрация Пользователя."""
-    serializer_class = UserSerializer
+    serializer_class = UserAdminSerializer
     permission_classes = [AllowAny]
 
     def create(self, request, *args, **kwargs):
@@ -21,7 +21,7 @@ class UserCreateAPIView(generics.CreateAPIView):
         (если пароль не хешируется - пользователь не считается активным
         и токен авторизации не создается).
         Отправка приветственного письма с паролем на почту."""
-        serializer = UserSerializer(data=request.data)
+        serializer = UserAdminSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
         headers = self.get_success_headers(serializer.data)
@@ -32,6 +32,7 @@ class UserCreateAPIView(generics.CreateAPIView):
         send_welcome_message(user, password)
         user.is_active = True
         user.save()
+        send_welcome_message(user, password)
 
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 

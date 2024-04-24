@@ -12,7 +12,7 @@ class Advert(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата и время создания')
 
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,
-                               verbose_name='Автор', related_name='author_advert')
+                               verbose_name='Автор', related_name='author_advert', **NULLABLE)
 
     def __str__(self):
         return f'{self.title} - {self.price} руб.'
@@ -30,7 +30,7 @@ class Review(models.Model):
 
     advert = models.ForeignKey(Advert, on_delete=models.CASCADE, verbose_name='Объявление', related_name='advert')
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.DO_NOTHING,
-                               verbose_name='Автор', related_name='author_review')
+                               verbose_name='Автор', related_name='author_review', **NULLABLE)
 
     def __str__(self):
         return f'{self.author}: {self.text}'
