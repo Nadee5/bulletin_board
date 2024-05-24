@@ -1,0 +1,62 @@
+[
+  {
+    "model": "users.user",
+    "pk": 1,
+    "fields": {
+      "password": "pbkdf2_sha256$720000$NRLTn72rSzQvKppyWe74yj$9QGvdNc6OxEQS2K9pNKEg1h4DxPh3lS/Q6jpvC8jo7Y=",
+      "last_login": "2024-04-23T19:51:49.100Z",
+      "is_superuser": true,
+      "is_staff": true,
+      "is_active": true,
+      "date_joined": "2024-04-23T19:45:13.221Z",
+      "email": "admin@admin.com",
+      "first_name": "Admin",
+      "last_name": "Adminov",
+      "phone": null,
+      "image": "",
+      "role": "admin",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": 6,
+    "fields": {
+      "password": "pbkdf2_sha256$720000$oLA9fCX1FZtGFedyAEJjGq$3sKBdWZa2ehutgrgCIkhbtPuPXk/1YcLrBnuQydA9zs=",
+      "last_login": null,
+      "is_superuser": false,
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2024-04-23T20:13:14.845Z",
+      "email": "lyovushkina.nv@gmail.com",
+      "first_name": "Надежда",
+      "last_name": "Лёвушкина",
+      "phone": null,
+      "image": "",
+      "role": "consumer",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": 7,
+    "fields": {
+      "password": "pbkdf2_sha256$720000$ErRKoypDDvjUXALtw6Wgp2$YqrRVjFXeaMU/TwQiOs2cLzzggOD3P2ZQ7hmGbTVF28=",
+      "last_login": null,
+      "is_superuser": false,
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2024-04-24T07:22:16.510Z",
+      "email": "lyovushkina.n@ya.ru",
+      "first_name": "Надежда",
+      "last_name": "Ежова",
+      "phone": null,
+      "image": "",
+      "role": "consumer",
+      "groups": [],
+      "user_permissions": []
+    }
+  }
+]
